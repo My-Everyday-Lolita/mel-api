@@ -13,6 +13,10 @@ import { FeaturesService } from "./features/features.service";
 import { jsonSchema as featurejc } from "./features/dto/create-feature.dto";
 import { ResourcesController } from "./resources.controller";
 import { Feature, FeatureSchema } from "./features/feature.schema";
+import { Color, ColorSchema } from "./colors/color.schema";
+import { ColorsController } from "./colors/colors.controller";
+import { ColorsService } from "./colors/colors.service";
+import { jsonSchema as colorjc } from "./colors/dto/create-color.dto";
 
 @Module({
     imports: [
@@ -20,19 +24,22 @@ import { Feature, FeatureSchema } from "./features/feature.schema";
             { name: Category.name, schema: CategorySchema },
             { name: Brand.name, schema: BrandSchema },
             { name: Feature.name, schema: FeatureSchema },
+            { name: Color.name, schema: ColorSchema },
         ])
     ],
     controllers: [
         CategoriesController,
         BrandsController,
         FeaturesController,
+        ColorsController,
         ResourcesController,
     ],
     providers: [
         CategoriesService,
         BrandsService,
         FeaturesService,
-        { provide: 'APP_SCHEMAS', useValue: [brandjc, categoryjc, featurejc] }
+        ColorsService,
+        { provide: 'APP_SCHEMAS', useValue: [brandjc, categoryjc, featurejc, colorjc] }
     ]
 })
 export class ResourcesModule { }
