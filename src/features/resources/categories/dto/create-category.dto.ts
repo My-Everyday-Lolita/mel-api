@@ -22,11 +22,11 @@ export class CreateCategoryDto {
 
 export const jsonSchema = validationMetadatasToSchemas({
     classTransformerMetadataStorage: defaultMetadataStorage,
-    additionalConverters: {
-        [ValidationTypes.NESTED_VALIDATION]: (meta: ValidationMetadata, options: IOptions): any => {
-            return {
-                '$ref': meta.target.toString()
-            };
-        }
-    }
+    // additionalConverters: {
+    //     [ValidationTypes.NESTED_VALIDATION]: (meta: ValidationMetadata, options: IOptions): any => {
+    //         return {
+    //             '$ref': meta.target.toString()
+    //         };
+    //     }
+    // }
 });
