@@ -24,8 +24,8 @@ export class BrandsService {
     }
 
     async create(createBrandDto: CreateBrandDto): Promise<Brand> {
-        const createdCategory = new this.brandModel(createBrandDto);
-        return createdCategory.save();
+        const createdBrand = new this.brandModel(createBrandDto);
+        return createdBrand.save();
     }
 
     async inertMany(items: CreateBrandDto[]): Promise<Brand[]> {

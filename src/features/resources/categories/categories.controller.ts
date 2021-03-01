@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, SetMetadata, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "src/features/keycloak/guards/auth.guard";
+import { RolesGuard } from "src/features/keycloak/guards/roles.guard";
 import { CategoriesService } from "./categories.service";
 import { Category } from "./category.schema";
 import { CreateCategoryDto } from "./dto/create-category.dto";
@@ -15,7 +17,16 @@ export class CategoriesController {
         return this.categoriesService.findAll();
     }
 
+    @Post()
+    @UseGuards(AuthGuard, RolesGuard)
+    @SetMetadata('roles', ['edit-category', 'admin'])
+    create(@Body() data: CreateCategoryDto): Promise<Category> {
+        return this.categoriesService.create(data);
+    }
+
     @Post('import')
+    @UseGuards(AuthGuard, RolesGuard)
+    @SetMetadata('roles', ['admin'])
     insertMany(@Body() data: CreateCategoryDto[]): Promise<Category[]> {
         return this.categoriesService.inertMany(data);
     }

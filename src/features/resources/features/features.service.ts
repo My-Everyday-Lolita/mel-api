@@ -11,8 +11,8 @@ export class FeaturesService {
     ) { }
 
     async create(createFeatureDto: CreateFeatureDto): Promise<Feature> {
-        const createdCategory = new this.featureModel(createFeatureDto);
-        return createdCategory.save();
+        const createdFeature = new this.featureModel(createFeatureDto);
+        return createdFeature.save();
     }
 
     async inertMany(items: CreateFeatureDto[]): Promise<Feature[]> {

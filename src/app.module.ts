@@ -2,8 +2,6 @@ import { HttpModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RateLimiterModule } from 'nestjs-rate-limiter';
-import { KeycloakBearerAxiosInterceptor } from './features/keycloak/bearer.axios';
-import { KeycloakService } from './features/keycloak/keycloak.service';
 import { ResourcesModule } from './features/resources/resources.module';
 
 @Module({
@@ -25,11 +23,7 @@ import { ResourcesModule } from './features/resources/resources.module';
     }),
     ResourcesModule,
   ],
-  controllers: [
-  ],
-  providers: [
-    KeycloakService,
-    KeycloakBearerAxiosInterceptor,
-  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule { }

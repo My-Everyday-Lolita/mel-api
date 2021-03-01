@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, SetMetadata, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "src/features/keycloak/guards/auth.guard";
+import { RolesGuard } from "src/features/keycloak/guards/roles.guard";
 import { Brand } from "./brand.schema";
 import { BrandsService } from "./brands.service";
 import { CreateBrandDto } from "./dto/create-brand.dto";
@@ -15,7 +17,16 @@ export class BrandsController {
         return this.brandsService.findAll();
     }
 
+    @Post()
+    @UseGuards(AuthGuard, RolesGuard)
+    @SetMetadata('roles', ['edit-brand', 'admin'])
+    create(@Body() data: CreateBrandDto): Promise<Brand> {
+        return this.brandsService.create(data);
+    }
+
     @Post('import')
+    @UseGuards(AuthGuard, RolesGuard)
+    @SetMetadata('roles', ['admin'])
     insertMany(@Body() data: CreateBrandDto[]): Promise<Brand[]> {
         return this.brandsService.inertMany(data);
     }

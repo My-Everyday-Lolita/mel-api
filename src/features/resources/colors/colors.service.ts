@@ -11,8 +11,8 @@ export class ColorsService {
     ) { }
 
     async create(createColorDto: CreateColorDto): Promise<Color> {
-        const createdCategory = new this.colorModel(createColorDto);
-        return createdCategory.save();
+        const createdColor = new this.colorModel(createColorDto);
+        return createdColor.save();
     }
 
     async inertMany(items: CreateColorDto[]): Promise<Color[]> {
