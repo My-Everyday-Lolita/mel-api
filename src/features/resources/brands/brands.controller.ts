@@ -19,7 +19,7 @@ export class BrandsController {
 
     @Post()
     @UseGuards(AuthGuard, RolesGuard)
-    @SetMetadata('roles', ['edit-brand', 'admin'])
+    @SetMetadata('roles', ['create-brand', 'admin'])
     create(@Body() data: CreateBrandDto): Promise<Brand> {
         return this.brandsService.create(data);
     }

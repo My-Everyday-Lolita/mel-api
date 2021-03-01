@@ -19,7 +19,7 @@ export class ColorsController {
 
     @Post()
     @UseGuards(AuthGuard, RolesGuard)
-    @SetMetadata('roles', ['edit-color', 'admin'])
+    @SetMetadata('roles', ['create-color', 'admin'])
     create(@Body() data: CreateColorDto): Promise<Color> {
         return this.colorsService.create(data);
     }

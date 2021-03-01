@@ -19,7 +19,7 @@ export class CategoriesController {
 
     @Post()
     @UseGuards(AuthGuard, RolesGuard)
-    @SetMetadata('roles', ['edit-category', 'admin'])
+    @SetMetadata('roles', ['create-category', 'admin'])
     create(@Body() data: CreateCategoryDto): Promise<Category> {
         return this.categoriesService.create(data);
     }

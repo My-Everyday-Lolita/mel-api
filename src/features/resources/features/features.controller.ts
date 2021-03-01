@@ -19,7 +19,7 @@ export class FeaturesController {
 
     @Post()
     @UseGuards(AuthGuard, RolesGuard)
-    @SetMetadata('roles', ['edit-feature', 'admin'])
+    @SetMetadata('roles', ['create-feature', 'admin'])
     create(@Body() data: CreateFeatureDto): Promise<Feature> {
         return this.featuresService.create(data);
     }
