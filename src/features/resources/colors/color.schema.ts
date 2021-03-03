@@ -7,6 +7,9 @@ export type ColorDocument = Color & Document;
 export class Color {
     @Prop({ required: true })
     name: string;
+
+    @Prop({ required: true })
+    hex: string;
 }
 
 export const ColorSchema = SchemaFactory.createForClass(Color);
