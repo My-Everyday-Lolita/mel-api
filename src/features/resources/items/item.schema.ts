@@ -13,6 +13,9 @@ export class ItemVariant {
     @ValidateNested({ each: true })
     @Type(() => Color)
     colors: [Color];
+
+    @IsNotEmpty()
+    photo: string;
 }
 
 @Schema()
