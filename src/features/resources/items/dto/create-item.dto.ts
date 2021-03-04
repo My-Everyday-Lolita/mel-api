@@ -16,9 +16,28 @@ export class CreateItemDto {
     @ValidateNested({ each: true })
     category: any[];
 
+    @IsOptional()
+    @ValidateNested({ each: true })
+    features: any[];
+
     @IsNotEmpty()
     @ValidateNested({ each: true })
     variants: any[];
+
+    @IsOptional()
+    year: number;
+
+    @IsOptional()
+    japanese: string;
+
+    @IsOptional()
+    measurments: string;
+
+    @IsOptional()
+    estimatedPrice: number;
+
+    @IsOptional()
+    keywords: string[];
 }
 
 export const jsonSchema = validationMetadatasToSchemas();
