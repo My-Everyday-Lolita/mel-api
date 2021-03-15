@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength, ValidateNested } from "class-validator";
 import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
 import { CreateBrandDto } from "../../brands/dto/create-brand.dto";
 
@@ -13,8 +13,8 @@ export class CreateItemDto {
     collectionn: string;
 
     @IsNotEmpty()
-    @ValidateNested({ each: true })
-    category: any[];
+    @ValidateNested()
+    category: any;
 
     @IsOptional()
     @ValidateNested({ each: true })
@@ -38,6 +38,13 @@ export class CreateItemDto {
 
     @IsOptional()
     keywords: string[];
+
+    @IsOptional()
+    substyles: string[];
+
+    @IsNotEmpty()
+    @IsEmail()
+    owner: string;
 }
 
 export const jsonSchema = validationMetadatasToSchemas();

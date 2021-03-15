@@ -4,6 +4,7 @@ import jwtDecode from "jwt-decode";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { KeycloakService } from "../keycloak.service";
+import { KeycloakUser } from "../user.model";
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -16,11 +17,14 @@ export class RolesGuard implements CanActivate {
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         const roles = this.reflector.get<string[]>('roles', context.getHandler());
         const headers = context.switchToHttp().getRequest().headers;
+        if (!headers.authorization) {
+            throw new HttpException('No access token found', HttpStatus.UNAUTHORIZED);
+        }
         const token = headers.authorization.replace('Bearer ', '');
         if (token === '') {
             throw new HttpException('No access token found', HttpStatus.UNAUTHORIZED);
         }
-        const user = jwtDecode<any>(token);
+        const user = jwtDecode<KeycloakUser>(token);
         if (!user.preferred_username) {
             throw new HttpException('No username found', HttpStatus.FORBIDDEN);
         }
@@ -37,7 +41,12 @@ export class RolesGuard implements CanActivate {
                         inactive: true,
                     }, HttpStatus.UNAUTHORIZED)
                 }
-                return roles.some(role => data.realm_access.roles.includes(role));
+                const roleOk = roles.some(role => data.realm_access.roles.includes(role));
+                if (!roleOk && roles.includes('own')) {
+                    const request = context.switchToHttp().getRequest();
+                    return request.body.owner === data.email || request.body.user === data.email;
+                }
+                return roleOk;
             })
         );
     }

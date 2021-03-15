@@ -8,20 +8,7 @@ import { CreateCategoryDto } from "./dto/create-category.dto";
 export class CategoriesService {
     constructor(
         @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>
-    ) {
-        // this.create({
-        //     name: 'Lorem', children: [
-        //         {
-        //             name: 'Ipsum', children: [
-        //                 { name: 'Dolor', shortname: 'D' },
-        //                 { name: 'Sit' },
-        //                 { name: 'Amet' },
-        //             ]
-        //         }
-        //     ]
-        // }).then(console.log).catch(console.error);
-        // this.findAll().then(console.log).catch(console.error);
-    }
+    ) { }
 
     async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
         const createdCategory = new this.categoryModel(createCategoryDto);

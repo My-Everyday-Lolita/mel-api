@@ -22,6 +22,10 @@ import { Item, ItemSchema } from "./items/item.schema";
 import { ItemsController } from "./items/items.controller";
 import { jsonSchema as itemjc } from "./items/dto/create-item.dto";
 import { KeycloakModule } from "../keycloak/keycloak.module";
+import { UserContent, UserContentSchema } from "./user-contents/user-contents.schema";
+import { UserContentsController } from "./user-contents/user-contents.controller";
+import { UserContentsService } from "./user-contents/user-contents.service";
+import { jsonSchema as usercontentjc } from "./user-contents/dto/create-user-content.dto";
 
 @Module({
     imports: [
@@ -31,6 +35,7 @@ import { KeycloakModule } from "../keycloak/keycloak.module";
             { name: Feature.name, schema: FeatureSchema },
             { name: Color.name, schema: ColorSchema },
             { name: Item.name, schema: ItemSchema },
+            { name: UserContent.name, schema: UserContentSchema },
         ]),
         KeycloakModule,
     ],
@@ -40,6 +45,7 @@ import { KeycloakModule } from "../keycloak/keycloak.module";
         FeaturesController,
         ColorsController,
         ItemsController,
+        UserContentsController,
         ResourcesController,
     ],
     providers: [
@@ -48,7 +54,8 @@ import { KeycloakModule } from "../keycloak/keycloak.module";
         FeaturesService,
         ColorsService,
         ItemsService,
-        { provide: 'APP_SCHEMAS', useValue: [brandjc, categoryjc, featurejc, colorjc, itemjc] }
+        UserContentsService,
+        { provide: 'APP_SCHEMAS', useValue: [brandjc, categoryjc, featurejc, colorjc, itemjc, usercontentjc] }
     ]
 })
 export class ResourcesModule { }

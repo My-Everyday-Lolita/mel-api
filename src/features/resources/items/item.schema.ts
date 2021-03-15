@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Type } from "class-transformer";
-import { IsNotEmpty, IsOptional, ValidateNested } from "class-validator";
+import { IsNotEmpty, IsOptional, IsUUID, ValidateNested } from "class-validator";
 import { Document } from "mongoose";
 import { Brand } from "../brands/brand.schema";
 import { Category } from "../categories/category.schema";
@@ -32,9 +32,9 @@ export class Item {
 
     @Prop()
     @IsNotEmpty()
-    @ValidateNested({ each: true })
+    @ValidateNested()
     @Type(() => Category)
-    category: [Category];
+    category: Category;
 
     @Prop()
     @IsOptional()
@@ -68,6 +68,31 @@ export class Item {
     @IsOptional()
     keywords: [string];
 
+    @Prop()
+    @IsOptional()
+    substyles: [string];
+
+    @Prop({ required: true })
+    @IsUUID()
+    owner: string;
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);
+
+ItemSchema.index({
+    'brand.name': 'text',
+    'brand.shortname': 'text',
+    collectionn: 'text',
+    year: 'text',
+    japanese: 'text',
+    measurments: 'text',
+    estimatedPrice: 'text',
+    keywords: 'text',
+    'features.name': 'text',
+    'category.name': 'text',
+    'category.shortname': 'text',
+    'category.parent.name': 'text',
+    'category.parent.shortname': 'text',
+    'category.parent.parent.name': 'text',
+    'category.parent.parent.shortname': 'text',
+}, { unique: true });

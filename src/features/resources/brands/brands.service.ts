@@ -8,20 +8,7 @@ import { CreateBrandDto } from "./dto/create-brand.dto";
 export class BrandsService {
     constructor(
         @InjectModel(Brand.name) private brandModel: Model<BrandDocument>
-    ) {
-        // this.create({
-        //     name: 'Lorem', children: [
-        //         {
-        //             name: 'Ipsum', children: [
-        //                 { name: 'Dolor', shortname: 'D' },
-        //                 { name: 'Sit' },
-        //                 { name: 'Amet' },
-        //             ]
-        //         }
-        //     ]
-        // }).then(console.log).catch(console.error);
-        // this.findAll().then(console.log).catch(console.error);
-    }
+    ) { }
 
     async create(createBrandDto: CreateBrandDto): Promise<Brand> {
         const createdBrand = new this.brandModel(createBrandDto);

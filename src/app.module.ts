@@ -20,6 +20,7 @@ import { ResourcesModule } from './features/resources/resources.module';
       authSource: process.env.MONGO_AUTH_SOURCE,
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     }),
     ResourcesModule,
   ],
