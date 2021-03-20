@@ -95,4 +95,4 @@ ItemSchema.index({
     'category.parent.shortname': 'text',
     'category.parent.parent.name': 'text',
     'category.parent.parent.shortname': 'text',
-}, { unique: true });
+});

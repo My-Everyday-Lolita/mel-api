@@ -26,7 +26,7 @@ export class ItemsController {
 
     @Put()
     @UseGuards(AuthGuard, RolesGuard)
-    @SetMetadata('roles', ['create-item'])
+    @SetMetadata('roles', ['create-item', 'admin'])
     create(@Body() data: CreateItemDto): Promise<Item> {
         return this.itemsService.create(data);
     }
