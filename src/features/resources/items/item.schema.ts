@@ -75,6 +75,12 @@ export class Item {
     @Prop({ required: true })
     @IsUUID()
     owner: string;
+
+    @Prop({ default: () => new Date() })
+    created: Date
+
+    @Prop({ default: () => new Date() })
+    modified: Date
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);

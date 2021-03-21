@@ -18,6 +18,8 @@ export class ItemsService {
     }
 
     async create(createItemDto: CreateItemDto): Promise<Item> {
+        createItemDto.created = new Date();
+        createItemDto.modified = new Date();
         const createdItem = new this.itemModel(createItemDto);
         return createdItem.save();
     }
@@ -35,6 +37,7 @@ export class ItemsService {
         item.year = updateItemDto.year;
         item.measurments = updateItemDto.measurments;
         item.estimatedPrice = updateItemDto.estimatedPrice;
+        item.modified = new Date();
         return item.save();
     }
 
@@ -107,5 +110,9 @@ export class ItemsService {
             delete filter.$and;
         }
         return this.itemModel.find(filter).limit(Math.min(limit, 50)).skip(skip).exec();
+    }
+
+    async recentlyAdded(): Promise<Item[]> {
+        return this.itemModel.find().sort({ created: -1 }).limit(4).exec();
     }
 }

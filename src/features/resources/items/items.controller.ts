@@ -19,6 +19,11 @@ export class ItemsController {
         return this.itemsService.findByCriteria(criteria, skip || 0, limit || 20);
     }
 
+    @Get('recently-added')
+    recentlyAdded(): Promise<Item[]> {
+        return this.itemsService.recentlyAdded();
+    }
+
     @Get(':id')
     findOne(@Param('id') id: string): Promise<Item> {
         return this.itemsService.findById(id);
