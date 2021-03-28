@@ -1,4 +1,4 @@
-import { isDateString, IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength, ValidateNested } from "class-validator";
 import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
 import { CreateBrandDto } from "../../brands/dto/create-brand.dto";
 
@@ -43,7 +43,7 @@ export class CreateItemDto {
     substyles: string[];
 
     @IsNotEmpty()
-    @IsEmail()
+    @IsUUID()
     owner: string;
 
     @IsOptional()

@@ -44,7 +44,7 @@ export class RolesGuard implements CanActivate {
                 const roleOk = roles.some(role => data.realm_access.roles.includes(role));
                 if (!roleOk && roles.includes('own')) {
                     const request = context.switchToHttp().getRequest();
-                    return request.body.owner === data.email || request.body.user === data.email;
+                    return request.body.owner === data.sub || request.body.user === data.sub;
                 }
                 return roleOk;
             })

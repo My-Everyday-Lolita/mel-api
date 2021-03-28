@@ -5,4 +5,5 @@ export interface KeycloakUser {
     realm_access: {
         roles: string[],
     };
+    sub: string;
 }

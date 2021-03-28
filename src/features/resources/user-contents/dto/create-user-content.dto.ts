@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsOptional, IsUUID, ValidateNested } from "class-validator";
 import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
 
 export class UserContentVariantDto {
@@ -52,7 +52,7 @@ export class CreateUserContentDto {
     @Type(() => UserContentCoordinationDto)
     coordinations: UserContentCoordinationDto[];
 
-    @IsEmail()
+    @IsUUID()
     @IsNotEmpty()
     user: string;
 

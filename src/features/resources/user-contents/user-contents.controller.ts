@@ -18,7 +18,7 @@ export class UserContentsController {
     @UseGuards(AuthGuard, RolesGuard)
     @SetMetadata('roles', ['uma_authorization'])
     getOrCreate(@User() user: KeycloakUser): Promise<UserContent> {
-        return this.userContentsService.getOrCreate(user.email);
+        return this.userContentsService.getOrCreate(user.sub);
     }
 
     @Patch()
