@@ -18,6 +18,7 @@ export class UserContentsService {
                 user,
                 closet: [],
                 wishlist: [],
+                coordinations: [],
                 modified: Date.now()
             });
         }
@@ -33,6 +34,7 @@ export class UserContentsService {
         const item = await this.userContentModel.findById(updateUserContentDto._id);
         item.closet = updateUserContentDto.closet;
         item.wishlist = updateUserContentDto.wishlist;
+        item.coordinations = updateUserContentDto.coordinations;
         item.modified = updateUserContentDto.modified;
         return item.save();
     }

@@ -11,6 +11,34 @@ export class UserContentVariantDto {
     wantToSell: boolean;
 }
 
+export class UserContentCoordinationFieldDto {
+    @IsNotEmpty()
+    type: string;
+
+    value: any;
+}
+
+export class UserContentCoordinationDto {
+    @IsNotEmpty()
+    title: string;
+
+    @IsOptional()
+    theme: string;
+
+    @IsOptional()
+    event: string;
+
+    @IsOptional()
+    place: string;
+
+    @IsOptional()
+    date: Date;
+
+    @ValidateNested({ each: true })
+    @Type(() => UserContentCoordinationFieldDto)
+    fields: UserContentCoordinationFieldDto[];
+}
+
 export class CreateUserContentDto {
     @ValidateNested({ each: true })
     @Type(() => UserContentVariantDto)
@@ -19,6 +47,10 @@ export class CreateUserContentDto {
     @ValidateNested({ each: true })
     @Type(() => UserContentVariantDto)
     wishlist: UserContentVariantDto[];
+
+    @ValidateNested({ each: true })
+    @Type(() => UserContentCoordinationDto)
+    coordinations: UserContentCoordinationDto[];
 
     @IsEmail()
     @IsNotEmpty()
