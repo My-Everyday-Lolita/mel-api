@@ -94,6 +94,7 @@ ItemSchema.index({
     measurments: 'text',
     estimatedPrice: 'text',
     keywords: 'text',
+    substyles: 'text',
     'features.name': 'text',
     'category.name': 'text',
     'category.shortname': 'text',
