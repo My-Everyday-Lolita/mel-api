@@ -1,5 +1,5 @@
 import { Prop, raw, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Document, Schema as MSchema } from "mongoose";
 
 export type UserContentDocument = UserContent & Document;
 
@@ -13,15 +13,13 @@ export class UserContent {
 
     @Prop({
         type: [raw({
+            id: String,
             title: String,
-            theme: String,
-            event: String,
-            place: String,
-            date: Date,
-            fields: [{
-                type: String,
-                value: { id: String }
-            }]
+            theme: { type: String, default: null },
+            event: { type: String, default: null },
+            place: { type: String, default: null },
+            date: String,
+            fields: [MSchema.Types.Mixed]
         })], default: []
     })
     coordinations: any[];
