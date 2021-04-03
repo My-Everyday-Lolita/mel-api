@@ -109,7 +109,7 @@ export class ItemsService {
         if (filter.$and.length === 0) {
             delete filter.$and;
         }
-        return this.itemModel.find(filter).limit(Math.min(limit, 50)).skip(skip).exec();
+        return this.itemModel.find(filter).limit(Math.min(limit, 500)).skip(skip).exec();
     }
 
     async recentlyAdded(): Promise<Item[]> {
