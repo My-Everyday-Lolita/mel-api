@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post, SetMetadata, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Post, SetMetadata, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "src/features/keycloak/guards/auth.guard";
 import { RolesGuard } from "src/features/keycloak/guards/roles.guard";
 import { CreateFeatureDto } from "./dto/create-feature.dto";
+import { UpdateFeatureDto } from "./dto/update-feature.dto";
 import { Feature } from "./feature.schema";
 import { FeaturesService } from "./features.service";
 
@@ -22,6 +23,13 @@ export class FeaturesController {
     @SetMetadata('roles', ['create-feature', 'admin'])
     create(@Body() data: CreateFeatureDto): Promise<Feature> {
         return this.featuresService.create(data);
+    }
+
+    @Patch()
+    @UseGuards(AuthGuard, RolesGuard)
+    @SetMetadata('roles', ['edit-feature', 'admin'])
+    update(@Body() data: UpdateFeatureDto): Promise<Feature> {
+        return this.featuresService.update(data);
     }
 
     @Post('import')
