@@ -15,7 +15,7 @@ export class ColorsService {
         return createdColor.save();
     }
 
-    async inertMany(items: CreateColorDto[]): Promise<Color[]> {
+    async insertMany(items: CreateColorDto[]): Promise<Color[]> {
         return this.colorModel.insertMany(items);
     }
 

@@ -15,7 +15,7 @@ export class BrandsService {
         return createdBrand.save();
     }
 
-    async inertMany(items: CreateBrandDto[]): Promise<Brand[]> {
+    async insertMany(items: CreateBrandDto[]): Promise<Brand[]> {
         return this.brandModel.insertMany(items);
     }
 

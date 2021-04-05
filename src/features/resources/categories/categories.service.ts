@@ -15,7 +15,7 @@ export class CategoriesService {
         return createdCategory.save();
     }
 
-    async inertMany(items: CreateCategoryDto[]): Promise<Category[]> {
+    async insertMany(items: CreateCategoryDto[]): Promise<Category[]> {
         return this.categoryModel.insertMany(items);
     }
 

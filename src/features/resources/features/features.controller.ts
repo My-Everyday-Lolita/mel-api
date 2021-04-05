@@ -28,7 +28,7 @@ export class FeaturesController {
     @UseGuards(AuthGuard, RolesGuard)
     @SetMetadata('roles', ['admin'])
     insertMany(@Body() data: CreateFeatureDto[]): Promise<Feature[]> {
-        return this.featuresService.inertMany(data);
+        return this.featuresService.insertMany(data);
     }
 
 }

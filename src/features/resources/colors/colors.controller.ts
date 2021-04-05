@@ -28,7 +28,7 @@ export class ColorsController {
     @UseGuards(AuthGuard, RolesGuard)
     @SetMetadata('roles', ['admin'])
     insertMany(@Body() data: CreateColorDto[]): Promise<Color[]> {
-        return this.colorsService.inertMany(data);
+        return this.colorsService.insertMany(data);
     }
 
 }

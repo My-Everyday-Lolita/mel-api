@@ -28,7 +28,7 @@ export class CategoriesController {
     @UseGuards(AuthGuard, RolesGuard)
     @SetMetadata('roles', ['admin'])
     insertMany(@Body() data: CreateCategoryDto[]): Promise<Category[]> {
-        return this.categoriesService.inertMany(data);
+        return this.categoriesService.insertMany(data);
     }
 
 }

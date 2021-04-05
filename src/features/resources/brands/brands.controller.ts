@@ -28,7 +28,7 @@ export class BrandsController {
     @UseGuards(AuthGuard, RolesGuard)
     @SetMetadata('roles', ['admin'])
     insertMany(@Body() data: CreateBrandDto[]): Promise<Brand[]> {
-        return this.brandsService.inertMany(data);
+        return this.brandsService.insertMany(data);
     }
 
 }

@@ -15,7 +15,7 @@ export class FeaturesService {
         return createdFeature.save();
     }
 
-    async inertMany(items: CreateFeatureDto[]): Promise<Feature[]> {
+    async insertMany(items: CreateFeatureDto[]): Promise<Feature[]> {
         return this.featureModel.insertMany(items);
     }
 
