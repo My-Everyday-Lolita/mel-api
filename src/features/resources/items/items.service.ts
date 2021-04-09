@@ -50,6 +50,7 @@ export class ItemsService {
     }
 
     async findByCriteria(criteria: Criterium[], skip: number, limit = 20): Promise<Item[]> {
+        let bypassLimit = false;
         const filter = {
             $and: []
         };
@@ -94,6 +95,7 @@ export class ItemsService {
         }
         const own = criteria.filter(crit => crit.type === 'own');
         if (own.length > 0) {
+            bypassLimit = true;
             const email = own[0].value;
             filter.$and.push({
                 owner: email
@@ -101,6 +103,7 @@ export class ItemsService {
         }
         const byIds = criteria.filter(crit => crit.type === 'id');
         if (byIds.length > 0) {
+            bypassLimit = true;
             filter.$and.push({
                 _id: { $in: byIds.map(crit => crit.value) }
             });
@@ -109,7 +112,11 @@ export class ItemsService {
         if (filter.$and.length === 0) {
             delete filter.$and;
         }
-        return this.itemModel.find(filter).limit(Math.min(limit, 500)).skip(skip).exec();
+        let query = this.itemModel.find(filter);
+        if (!bypassLimit) {
+            query = query.limit(Math.min(limit, 500)).skip(skip);
+        }
+        return query.exec();
     }
 
     async recentlyAdded(): Promise<Item[]> {
