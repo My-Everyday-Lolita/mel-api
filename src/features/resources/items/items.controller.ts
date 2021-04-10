@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Query, SetMetadata, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query, SetMetadata, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "src/features/keycloak/guards/auth.guard";
 import { RolesGuard } from "src/features/keycloak/guards/roles.guard";
 import { CreateItemDto } from "./dto/create-item.dto";
@@ -27,6 +27,13 @@ export class ItemsController {
     @Get(':id')
     findOne(@Param('id') id: string): Promise<Item> {
         return this.itemsService.findById(id);
+    }
+
+    @Delete(':id')
+    @UseGuards(AuthGuard, RolesGuard)
+    @SetMetadata('roles', ['admin', 'own'])
+    delete(@Param('id') id: string): Promise<any> {
+        return this.itemsService.delete(id);
     }
 
     @Put()

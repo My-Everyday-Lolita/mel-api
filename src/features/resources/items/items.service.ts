@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Feature } from "../features/feature.schema";
@@ -43,6 +43,14 @@ export class ItemsService {
 
     async insertMany(items: CreateItemDto[]): Promise<Item[]> {
         return this.itemModel.insertMany(items);
+    }
+
+    delete(id: string): Promise<any> {
+        const item = this.itemModel.findById(id);
+        if (item) {
+            return item.deleteOne().exec();
+        }
+        throw new HttpException('There is no item to delete for the given id', 410);
     }
 
     async findAll(): Promise<Item[]> {
