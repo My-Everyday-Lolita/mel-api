@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query, SetMetadata, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Patch, Post, Put, Query, SetMetadata, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "src/features/keycloak/guards/auth.guard";
 import { RolesGuard } from "src/features/keycloak/guards/roles.guard";
 import { CreateItemDto } from "./dto/create-item.dto";
@@ -15,8 +15,9 @@ export class ItemsController {
     ) { }
 
     @Post('search/')
+    @HttpCode(200)
     findByCriteria(@Body() criteria: Criterium[], @Query('skip', ParseIntPipe) skip: number, @Query('limit', ParseIntPipe) limit: number): Promise<Item[]> {
-        return this.itemsService.findByCriteria(criteria, skip || 0, limit || 20);
+        return this.itemsService.findByCriteria(Array.isArray(criteria) && criteria || [], skip || 0, limit || 20);
     }
 
     @Get('recently-added')
@@ -24,7 +25,7 @@ export class ItemsController {
         return this.itemsService.recentlyAdded();
     }
 
-    @Get(':id')
+    @Get('get/:id')
     findOne(@Param('id') id: string): Promise<Item> {
         return this.itemsService.findById(id);
     }
