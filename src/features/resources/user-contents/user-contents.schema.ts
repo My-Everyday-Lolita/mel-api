@@ -8,7 +8,7 @@ export class UserContent {
     @Prop({ type: [raw({ id: String, wantToSell: { type: Boolean, required: false } })], default: [] })
     closet: any[];
 
-    @Prop({ type: [raw({ id: String })], default: [] })
+    @Prop({ type: [raw({ id: String, dreamDress: { type: Boolean, required: false } })], default: [] })
     wishlist: any[];
 
     @Prop({
