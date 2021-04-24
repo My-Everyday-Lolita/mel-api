@@ -124,11 +124,11 @@ export class ItemsService {
         if (!bypassLimit) {
             query = query.limit(Math.min(limit, 500)).skip(skip);
         }
-        return query.exec();
+        return query.sort({ created: -1 }).exec();
     }
 
     async recentlyAdded(): Promise<Item[]> {
-        return this.itemModel.find().sort({ created: -1 }).limit(4).exec();
+        return this.itemModel.find().sort({ created: -1 }).limit(20).exec();
     }
 
     async stats(): Promise<any> {
