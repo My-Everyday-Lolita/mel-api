@@ -130,4 +130,29 @@ export class ItemsService {
     async recentlyAdded(): Promise<Item[]> {
         return this.itemModel.find().sort({ created: -1 }).limit(4).exec();
     }
+
+    async stats(): Promise<any> {
+        return this.itemModel.aggregate([
+            {
+                $facet: {
+                    "brands": [
+                        { $unwind: "$brand" },
+                        { $sortByCount: "$brand" },
+                    ],
+                    "categories": [
+                        { $unwind: "$category" },
+                        { $sortByCount: "$category" },
+                    ],
+                    "colors": [
+                        { $unwind: "$variants" },
+                        { $unwind: "$variants.colors" },
+                        { $sortByCount: "$variants.colors" },
+                    ],
+                    "count_items": [
+                        { $count: "total" }
+                    ]
+                },
+            },
+        ]).exec();
+    }
 }

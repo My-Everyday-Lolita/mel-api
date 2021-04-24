@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Category, CategoryDocument } from "./category.schema";
@@ -30,5 +30,13 @@ export class CategoriesService {
 
     async findAll(): Promise<Category[]> {
         return this.categoryModel.find().exec();
+    }
+
+    async delete(id: string): Promise<any> {
+        const category = this.categoryModel.findById(id);
+        if (category) {
+            return category.deleteOne().exec();
+        }
+        throw new HttpException('There is no item to delete for the given id', 410);
     }
 }

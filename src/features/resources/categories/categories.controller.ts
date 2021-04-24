@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, SetMetadata, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, SetMetadata, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "src/features/keycloak/guards/auth.guard";
 import { RolesGuard } from "src/features/keycloak/guards/roles.guard";
 import { CategoriesService } from "./categories.service";
@@ -18,7 +18,7 @@ export class CategoriesController {
         return this.categoriesService.findAll();
     }
 
-    @Post()
+    @Put()
     @UseGuards(AuthGuard, RolesGuard)
     @SetMetadata('roles', ['create-category', 'admin'])
     create(@Body() data: CreateCategoryDto): Promise<Category> {
@@ -39,4 +39,10 @@ export class CategoriesController {
         return this.categoriesService.insertMany(data);
     }
 
+    @Delete(':id')
+    @UseGuards(AuthGuard, RolesGuard)
+    @SetMetadata('roles', ['admin'])
+    delete(@Param('id') id: string): Promise<any> {
+        return this.categoriesService.delete(id);
+    }
 }

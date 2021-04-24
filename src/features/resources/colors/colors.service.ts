@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Color, ColorDocument } from "./color.schema";
@@ -29,5 +29,13 @@ export class ColorsService {
 
     async findAll(): Promise<Color[]> {
         return this.colorModel.find().exec();
+    }
+
+    async delete(id: string): Promise<any> {
+        const color = this.colorModel.findById(id);
+        if (color) {
+            return color.deleteOne().exec();
+        }
+        throw new HttpException('There is no item to delete for the given id', 410);
     }
 }

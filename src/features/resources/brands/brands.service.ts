@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Brand, BrandDocument } from "./brand.schema";
@@ -28,6 +28,14 @@ export class BrandsService {
     }
 
     async findAll(): Promise<Brand[]> {
-        return this.brandModel.find().exec();
+        return this.brandModel.find().sort({ name: 'asc' }).exec();
+    }
+
+    async delete(id: string): Promise<any> {
+        const brand = this.brandModel.findById(id);
+        if (brand) {
+            return brand.deleteOne().exec();
+        }
+        throw new HttpException('There is no item to delete for the given id', 410);
     }
 }

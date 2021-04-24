@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, SetMetadata, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, SetMetadata, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "src/features/keycloak/guards/auth.guard";
 import { RolesGuard } from "src/features/keycloak/guards/roles.guard";
 import { Color } from "./color.schema";
@@ -18,7 +18,7 @@ export class ColorsController {
         return this.colorsService.findAll();
     }
 
-    @Post()
+    @Put()
     @UseGuards(AuthGuard, RolesGuard)
     @SetMetadata('roles', ['create-color', 'admin'])
     create(@Body() data: CreateColorDto): Promise<Color> {
@@ -37,6 +37,13 @@ export class ColorsController {
     @SetMetadata('roles', ['admin'])
     insertMany(@Body() data: CreateColorDto[]): Promise<Color[]> {
         return this.colorsService.insertMany(data);
+    }
+
+    @Delete(':id')
+    @UseGuards(AuthGuard, RolesGuard)
+    @SetMetadata('roles', ['admin'])
+    delete(@Param('id') id: string): Promise<any> {
+        return this.colorsService.delete(id);
     }
 
 }

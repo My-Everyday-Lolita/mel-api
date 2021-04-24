@@ -58,4 +58,11 @@ export class ItemsController {
         return this.itemsService.insertMany(data);
     }
 
+    @Get('stats')
+    @UseGuards(AuthGuard, RolesGuard)
+    @SetMetadata('roles', ['dashboard-access', 'admin'])
+    stats(): Promise<any> {
+        return this.itemsService.stats();
+    }
+
 }
